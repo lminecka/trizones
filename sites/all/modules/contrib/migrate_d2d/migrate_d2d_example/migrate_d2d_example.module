@@ -9,14 +9,14 @@
 /**
  * Implements hook_flush_caches().
  */
-function migrate_d2d_example_flush_caches() {
-  migrate_d2d_example_register_migrations();
+function migrate_trizones_flush_caches() {
+  migrate_trizones_register_migrations();
 }
 
 /**
- * Register all D6->D7 migrations.
+ * Register all D4->D7 migrations.
  */
-function migrate_d2d_example_register_migrations() {
+function migrate_trizones_register_migrations() {
   /**
    * Each migration being registered takes an array of arguments, some required
    * and some optional. Start with the common arguments required by all - the
@@ -31,12 +31,12 @@ function migrate_d2d_example_register_migrations() {
   // The description and the migration machine name are also required arguments,
   // which will be unique for each migration you register.
   $arguments = $common_arguments + array(
-    'description' => t('Migration of users from Drupal 6'),
+    'description' => t('Migration of users from Drupal 4'),
     'machine_name' => 'User',
   );
 
-  // We just use the migrate_d2d D6 migration class as-is.
-  Migration::registerMigration('DrupalUser6Migration', $arguments['machine_name'],
+  // We just use the migrate_d2d D4 migration class as-is.
+  Migration::registerMigration('DrupalUser4Migration', $arguments['machine_name'],
                                $arguments);
 
   // For vocabulary migrations, source_vocabulary and destination_vocabulary are
@@ -46,13 +46,13 @@ function migrate_d2d_example_register_migrations() {
     array(
       'description' => t('Migration of Countries terms from Drupal 6'),
       'machine_name' => 'Countries',
-      'source_vocabulary' => '1',  // D6 Vocabulary ID
+      'source_vocabulary' => '1',  // D4 Vocabulary ID
       'destination_vocabulary' => 'countries',
     ),
     array(
       'description' => t('Migration of Topics terms from Drupal 6'),
       'machine_name' => 'Topics',
-      'source_vocabulary' => '2',  // D6 Vocabulary ID
+      'source_vocabulary' => '2',  // D4 Vocabulary ID
       'destination_vocabulary' => 'topics',
     ),
   );
@@ -92,7 +92,7 @@ function migrate_d2d_example_register_migrations() {
     ),
   );
   // Tell the node migrations where the users are coming from, so they can
-  // set up the dependency and resolve D6->D7 uids.
+  // set up the dependency and resolve D4->D7 uids.
   $common_node_arguments = $common_arguments + array(
     'user_migration' => 'User',
   );
@@ -108,7 +108,7 @@ function migrate_d2d_example_register_migrations() {
     'machine_name' => 'Menu',
   );
 
-  // We just use the migrate_d2d D6 migration class as-is.
+  // We just use the migrate_d2d D4 migration class as-is.
   Migration::registerMigration('DrupalMenu6Migration', $menu_arguments['machine_name'],
                                $menu_arguments);
 
@@ -125,7 +125,7 @@ function migrate_d2d_example_register_migrations() {
 /**
  * Implements hook_migrate_api().
  */
-function migrate_d2d_example_migrate_api() {
+function migrate_trizones_migrate_api() {
   $api = array(
     'api' => 2,
   );
