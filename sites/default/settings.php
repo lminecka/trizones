@@ -224,6 +224,19 @@ $databases = array (
       'prefix' => '',
     ),
   ),
+  'legacy' => 
+  array (
+    'default' => 
+    array (
+      'database' => 'trizones_d4',
+      'username' => 'root',
+      'password' => 'root',
+      'host' => 'localhost',
+      'port' => '',
+      'driver' => 'mysql',
+      'prefix' => '',
+    ),
+  ),
 );
 
 /**
