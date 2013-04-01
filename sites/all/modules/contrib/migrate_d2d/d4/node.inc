@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * Implementation of DrupalNodeMigration for Drupal 5 sources.
+ * Implementation of DrupalNodeMigration for Drupal 4 sources.
  */
 
 /**
- * Handling specific to a Drupal 5 source for nodes.
+ * Handling specific to a Drupal 4 source for nodes.
  */
-class DrupalNode5Migration extends DrupalNodeMigration {
+class DrupalNode4Migration extends DrupalNodeMigration {
   /**
    * Translation from field names assigned when executing the query to our
    * subfield notation.
@@ -28,7 +28,7 @@ class DrupalNode5Migration extends DrupalNodeMigration {
 
     $this->sourceOptions['fix_field_names'] = $this->fixFieldNames;
 
-    $this->source = new MigrateDrupal5SourceSQL($query, $this->sourceFields, NULL,
+    $this->source = new MigrateDrupal4SourceSQL($query, $this->sourceFields, NULL,
       $this->sourceOptions);
 
     $this->addFieldMapping('body:summary', 'teaser');
@@ -38,7 +38,7 @@ class DrupalNode5Migration extends DrupalNodeMigration {
   }
 
   /**
-   * Query for basic node fields from Drupal 5.
+   * Query for basic node fields from Drupal 4.
    *
    * @return QueryConditionInterface
    */
@@ -105,7 +105,7 @@ class DrupalNode5Migration extends DrupalNodeMigration {
  * We override the default SQL source class just so we can clean up subfield
  * names for the UI.
  */
-class MigrateDrupal5SourceSQL extends MigrateSourceSQL {
+class MigrateDrupal4SourceSQL extends MigrateSourceSQL {
   /**
    * Translation from field names assigned when executing the query to our
    * subfield notation.

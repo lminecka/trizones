@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * Implementation of DrupalRoleMigration for Drupal 5 sources.
+ * Implementation of DrupalRoleMigration for Drupal 4 sources.
  */
 
 /**
- * Handling specific to a Drupal 5 source for roles.
+ * Handling specific to a Drupal 4 source for roles.
  */
-class DrupalRole5Migration extends DrupalRoleMigration {
+class DrupalRole4Migration extends DrupalRoleMigration {
   /**
    * @param array $arguments
    */

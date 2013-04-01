@@ -1,18 +1,18 @@
 <?php
 /**
  * @file
- * Implementation of DrupalTermMigration for Drupal 5 sources.
+ * Implementation of DrupalTermMigration for Drupal 4 sources.
  */
 
 /**
- * Handling specific to a Drupal 5 source for taxonomy terms.
+ * Handling specific to a Drupal 4 source for taxonomy terms.
  */
-class DrupalTerm5Migration extends DrupalTermMigration {
+class DrupalTerm4Migration extends DrupalTermMigration {
   public function __construct(array $arguments) {
     $this->sourceFields['parent'] = t('Term: Parent term');
     parent::__construct($arguments);
 
-    // Drupal 5 had no format for terms.
+    // Drupal 4 had no format for terms.
     $this->addFieldMapping('format');
   }
 

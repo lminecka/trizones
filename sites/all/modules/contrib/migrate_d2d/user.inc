@@ -104,8 +104,8 @@ abstract class DrupalUserMigration extends DrupalMigration {
       $this->addFieldMapping('roles');
     }
 
-    $this->addFieldMapping('signature_format', 'signature_format')
-         ->callbacks(array($this, 'mapFormat'));
+//    $this->addFieldMapping('signature_format', 'signature_format')
+  //       ->callbacks(array($this, 'mapFormat'));
 
     $this->addUnmigratedDestinations(array('is_new', 'role_names'));
 
