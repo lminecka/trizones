@@ -22,7 +22,9 @@ files[] = d4/d4.inc
 files[] = d4/comment.inc
 files[] = d4/file.inc
 files[] = d4/node.inc
+files[] = d4/node_source.inc
 files[] = d4/role.inc
+files[] = d4/source.inc
 files[] = d4/taxonomy.inc
 files[] = d4/user.inc
 

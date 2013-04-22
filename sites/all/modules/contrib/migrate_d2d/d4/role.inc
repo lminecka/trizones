@@ -7,7 +7,7 @@
 /**
  * Handling specific to a Drupal 4 source for roles.
  */
-class DrupalRole4Migration extends DrupalRoleMigration {
+class Drupal4RoleMigration extends DrupalRoleMigration {
   /**
    * @param array $arguments
    */

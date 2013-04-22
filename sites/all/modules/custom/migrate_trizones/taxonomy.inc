@@ -7,35 +7,16 @@
 /**
  * Handling specific to a Drupal 4 source for taxonomy terms.
  */
-class DrupalTerm4Migration extends DrupalTermMigration {
+abstract class Drupal4TermMigration extends DrupalTermMigration {
   public function __construct(array $arguments) {
     $this->sourceFields['parent'] = t('Term: Parent term');
-     parent::__construct($arguments);
+    parent::__construct($arguments);
 
     // Drupal 4 had no format for terms.
     $this->addFieldMapping('format');
   }
 
-  /**
-   * Implementation of DrupalTermMigration::query().
-   *
-   * @return SelectQueryInterface
-   */
-  protected function query() {
-    // Note the explode - this supports the (admittedly unusual) case of
-    // consolidating multiple vocabularies into one.
-    $query = Database::getConnection('default', $this->sourceConnection)
-             ->select('term_data', 'td')
-             ->fields('td', array('tid', 'name', 'description', 'weight'))
-             ->condition('vid', explode(',', $this->sourceVocabulary), 'IN')
-             ->orderBy('parent')
-             ->distinct();
-    // Join to the hierarchy so we can sort on parent, but we'll pull the
-    // actual parent values in separately in case there are multiples.
-    $query->leftJoin('term_hierarchy', 'th', 'td.tid=th.tid');
-    return $query;
-  }
-
+  
   /**
    * Implementation of Migration::prepareRow().
    *

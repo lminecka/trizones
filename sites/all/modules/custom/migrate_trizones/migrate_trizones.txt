@@ -29,14 +29,14 @@ function migrate_trizones_register_migrations() {
   );
 
   // The description and the migration machine name are also required arguments,
-  // which will be unique for each migration you register.
+  // which will be unique for each migration you re4gister.
   $arguments = $common_arguments + array(
     'description' => t('Migration of users from Drupal 4'),
-    'machine_name' => 'TZUser',
+    'machine_name' => 'D4User',
   );
 
   // We just use the migrate_d2d D4 migration class as-is.
-  Migration::registerMigration('TrizonesUserMigration', $arguments['machine_name'],
+  Migration::registerMigration('Drupal4UserMigration', $arguments['machine_name'],
                                $arguments);
 
   // For vocabulary migrations, source_vocabulary and destination_vocabulary are
@@ -44,31 +44,64 @@ function migrate_trizones_register_migrations() {
   // names, so we use the vocabulary ID to uniquely identify them.
   $vocabulary_arguments = array(
     array(
-      'description' => t('Migration of Countries terms from Drupal 4'),
-      'machine_name' => 'Countries',
+      'description' => t('Migration of Forum terms from Drupal 4'),
+      'machine_name' => 'D4ForumTerms',
       'source_vocabulary' => '1',  // D4 Vocabulary ID
-      'destination_vocabulary' => 'countries',
+      'destination_vocabulary' => 'forums',
     ),
-    array(
+  /*  array(
       'description' => t('Migration of Topics terms from Drupal 4'),
-      'machine_name' => 'Topics',
-      'source_vocabulary' => '2',  // D4 Vocabulary ID
+      'machine_name' => 'D4TopicTerms',
+      'source_vocabulary' => '2',
       'destination_vocabulary' => 'topics',
     ),
-  );
+    array(
+      'description' => t('Migration of Race terms from Drupal 4'),
+      'machine_name' => 'D4RaceTerms',
+      'source_vocabulary' => '4',  // D4 Vocabulary ID
+      'destination_vocabulary' => 'races',
+    ),
+    array(
+      'description' => t('Migration of Resource terms from Drupal 4'),
+      'machine_name' => 'D4ResourceTerms',
+      'source_vocabulary' => '5', 
+      'destination_vocabulary' => 'resource',
+    ),
+    array(
+      'description' => t('Migration of Workout Tracks terms from Drupal 4'),
+      'machine_name' => 'D4WorkoutTrackTerms',
+      'source_vocabulary' => '6',  // D4 Vocabulary ID
+      'destination_vocabulary' => 'workout_tracks',
+    ),
+    array(
+      'description' => t('Migration of Positions terms from Drupal 4'),
+      'machine_name' => 'D4PositionTerms',
+      'source_vocabulary' => '8',  // D4 Vocabulary ID
+      'destination_vocabulary' => 'positions',
+    ),
+    array(
+      'description' => t('Migration of Apparal & Gear terms from Drupal 4'),
+      'machine_name' => 'D4ApparelGearTerms',
+      'source_vocabulary' => '9',  // D4 Vocabulary ID
+      'destination_vocabulary' => 'apparel_and_gear',
+    ),
+    */
+    
+   );
 
   // Again, we're using the migrate_d2d class directly.
   // The soft dependency says that while we don't have to run the user migration
   // first, we want to make sure it's listed first so the vocubularies are
   // listed right ahead of the node migrations.
   $common_vocabulary_arguments = $common_arguments + array(
-    'class_name' => 'TrizonesTermMigration',
-    'soft_dependencies' => array('TZUser'),
+    'class_name' => 'Drupal4TermMigration',
+    'soft_dependencies' => array('D4User'),
   );
   foreach ($vocabulary_arguments as $arguments) {
     $arguments += $common_vocabulary_arguments;
-//    Migration::registerMigration($arguments['class_name'], $arguments['machine_name'],
-//                                 $arguments);
+     echo "\nterm machine name: $arguments[machine_name]";
+    Migration::registerMigration($arguments['class_name'], $arguments['machine_name'],
+                                 $arguments);
   }
 
   // Node migrations - each has its own class derived from the migrate_d2d class,
@@ -76,33 +109,27 @@ function migrate_trizones_register_migrations() {
   // and destination_type are required arguments.
   $node_arguments = array(
     array(
-      'class_name' => 'TrizonesImageMigration',
-      'description' => t('Migration of image nodes from Drupal 4'),
-      'machine_name' => 'TZImage',
-      'source_type' => 'image',
-      'destination_type' => 'image',
-    ),
-    array(
-      'class_name' => 'TrizonesForumMigration',
+      'class_name' => 'Drupal4ForumMigration',
       'description' => t('Migration of forum nodes from Drupal 4'),
-      'machine_name' => 'Article',
-      'source_type' => 'my_article',
-      'destination_type' => 'new_article',
- //     'dependencies' => array('TZImage', 'Countries', 'Topics'),
+      'machine_name' => 'D4Forum',
+      'source_type' => 'forum',
+      'destination_type' => 'forum',
+      'dependencies' => array('D4ForumTerms', 'D4User'),
     ),
   );
   // Tell the node migrations where the users are coming from, so they can
   // set up the dependency and resolve D4->D7 uids.
   $common_node_arguments = $common_arguments + array(
-    'user_migration' => 'User',
+    'user_migration' => 'D4User',
   );
   foreach ($node_arguments as $arguments) {
     $arguments = array_merge_recursive($arguments, $common_node_arguments);
-//    Migration::registerMigration($arguments['class_name'], $arguments['machine_name'],
-//                                 $arguments);
+    echo "\nnode machine name: $arguments[machine_name]";
+    Migration::registerMigration($arguments['class_name'], $arguments['machine_name'],
+                                 $arguments);
   }
-}
 
+}
 
 /**
  * Implements hook_migrate_api().

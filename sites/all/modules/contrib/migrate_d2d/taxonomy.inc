@@ -38,7 +38,13 @@ abstract class DrupalTermMigration extends DrupalMigration {
    */
   public function __construct(array $arguments) {
     parent::__construct($arguments);
-    $this->sourceVocabulary = $arguments['source_vocabulary'];
+    if (array_key_exists('source_vocabulary', $arguments)) {
+   	 $this->sourceVocabulary = $arguments['source_vocabulary'];
+   	} else {
+   		$args = print_r($arguments, true);
+   		echo "\n<br />arguments are missing a source vocabulary: $args";
+   	}
+   		
     $this->destinationVocabulary = $arguments['destination_vocabulary'];
     $this->sourceFields += $this->version->getSourceFields(
       'taxonomy_term', $this->sourceVocabulary);
