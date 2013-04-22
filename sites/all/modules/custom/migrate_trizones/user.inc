@@ -22,6 +22,20 @@ class TrizonesUserMigration extends DrupalUser4Migration {
 
     $this->addFieldMapping(NULL, 'timezone')
          ->description('If present, assigned to D7 timezone');
+    $this->addFieldMapping('field_first_name:language', NULL);
+    $this->addFieldMapping('field_last_name:language', NULL);
+    $this->addFieldMapping('field_address', NULL);
+		$this->addFieldMapping('field_address:name', NULL);
+		$this->addFieldMapping('field_address:street', NULL);
+		$this->addFieldMapping('field_address:additional', NULL);
+		$this->addFieldMapping('field_address:city', NULL);
+		$this->addFieldMapping('field_address:province', NULL);
+		$this->addFieldMapping('field_address:postal_code', NULL);
+		$this->addFieldMapping('field_address:latitude', NULL);
+		$this->addFieldMapping('field_address:longitude', NULL);
+		$this->addFieldMapping('field_address:country', NULL);
+		$this->addFieldMapping('field_address:source', NULL);
+		$this->addFieldMapping('field_address:is_primary', NULL);
     $this->addFieldMapping('field_publish_address', 'profile_publish_address');
   	$this->addFieldMapping(NULL, 'profile_publish_phone');
   	$this->addFieldMapping('field_usat', 'profile_usat');
@@ -37,10 +51,14 @@ class TrizonesUserMigration extends DrupalUser4Migration {
   	$this->addFieldMapping('field_last_name', 'profile_last_name');
   	$this->addFieldMapping('field_birthdate', 'profile_birthdate');
   	$this->addFieldMapping('field_decide', 'profile_decide');
+  	$this->addFieldMapping('field_decide:language', NULL);
   	$this->addFieldMapping('field_goals', 'profile_goals');
+  	$this->addFieldMapping('field_goals:language', NULL);
   	$this->addFieldMapping('field_referer', 'profile_referer');
   	$this->addFieldMapping('field_referer_other', 'profile_referer_other');
+  	$this->addFieldMapping('field_referer_other:language', NULL);
   	$this->addFieldMapping('field_training_suggestions', 'profile_training_suggestions');
+  	$this->addFieldMapping('field_training_suggestions:language', NULL);
   	$this->addFieldMapping('field_usat_expire', 'profile_usat_expire');
   	$this->addFieldMapping('field_shirt_size', 'profile_shirt_size');
   	$this->addFieldMapping('field_team', 'profile_team');
