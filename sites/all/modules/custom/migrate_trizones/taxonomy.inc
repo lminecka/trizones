@@ -7,13 +7,11 @@
 /**
  * Handling specific to a Drupal 4 source for taxonomy terms.
  */
-abstract class Drupal4TermMigration extends DrupalTermMigration {
+class TrizonesTermMigration extends DrupalTerm4Migration {
   public function __construct(array $arguments) {
     $this->sourceFields['parent'] = t('Term: Parent term');
     parent::__construct($arguments);
-
-    // Drupal 4 had no format for terms.
-    $this->addFieldMapping('format');
+    
   }
 
   

@@ -7,8 +7,11 @@ hidden = TRUE
 dependencies[] = migrate
 dependencies[] = migrate_d2d
 
-files[] = user.inc
+
+
 files[] = source.inc
+files[] = taxonomy.inc
+files[] = user.inc
 
 ; Information added by drupal.org packaging script on 2013-02-28
 version = "7.x-2.0"
