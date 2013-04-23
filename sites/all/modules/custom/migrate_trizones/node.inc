@@ -3,7 +3,7 @@
 /**
  * Common mappings for the Drupal 4 node migrations.
  */
-abstract class TrizonesNodeMigration extends Drupal4NodeMigration {
+abstract class TrizonesNodeMigration extends DrupalNode4Migration {
   public function __construct(array $arguments) {
     parent::__construct($arguments);
 
@@ -63,19 +63,54 @@ class TrizonesForumMigration extends TrizonesNodeMigration {
   public function __construct(array $arguments) {
     // Add any other data we're pulling into the source row, before the parent
     // constructor.
-    $this->sourceFields['lead_graphic'] = 'Lead graphic string from D4';
-    $this->sourceFields['summary'] = 'Summary string from D4';
 
+    
+		$this->sourceFields['create_term'] = '';
+    $this->sourceFields['ignore_case'] = '';
+    $this->sourceFields['language'] = '';
+    $this->sourceFields['source_type'] = '';
+    $this->sourceFields['taxonomy_forums'] = '';
+    
+		$this->addFieldMapping('taxonomy_forums', 'taxonomy_forums');
+		$this->addFieldMapping('taxonomy_forums:create_term', 'create_term');
+		$this->addFieldMapping('taxonomy_forums:ignore_case', 'ignore_case');
+		$this->addFieldMapping('taxonomy_forums:source_type', 'source_type');
+		$this->addFieldMapping('language', 'language');
+		$this->addFieldMapping('tnid', NULL);
+		$this->addFieldMapping('translate', NULL);
+ 			
     parent::__construct($arguments);
 
-    $this->addFieldMapping('field_image', 'field_lead_graphic')
-         ->sourceMigration('Image');
-    // Note that we map migrated terms by the vocabulary ID.
-    $this->addFieldMapping('field_countries', '1')
-         ->sourceMigration('Countries')
-         ->arguments(array('source_type' => 'tid'));
-    $this->addFieldMapping('field_topics', '2')
-         ->sourceMigration('Topics')
-         ->arguments(array('source_type' => 'tid'));
+  }
+  
+  /**
+   * Implementation of Migration::prepareRow().
+   *
+   * Here we pull in additional data from a non-core, non-CCK table.
+   *
+   * @param $row
+   */
+  public function prepareRow($row) {
+    if (parent::prepareRow($row) === FALSE) {
+      return FALSE;
+    }
+
+    $forum_row = Database::getConnection('default', $this->sourceConnection)
+                 ->select('forum', 'f')
+                 ->fields('f', array('tid'))
+                 ->condition('vid', $row->vid)
+                 ->execute()
+                 ->fetchObject();
+    if ($forum_row) {
+      $row->taxonomy_forums = $forum_row->tid;
+      $row->create_term = false;
+  		$row->ignore_case = true;
+  		$row->source_type = 'tid';
+      $row->language = 'en';
+    }
+    else {
+      $this->saveMessage(t('No forum data for forum node with vid !vid',
+                         array('!vid' => $row->vid)));
+    }
   }
 }

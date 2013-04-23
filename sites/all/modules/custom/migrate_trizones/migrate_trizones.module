@@ -110,9 +110,9 @@ function migrate_trizones_register_migrations() {
   // and destination_type are required arguments.
    $node_arguments = array(
     array(
-      'class_name' => 'Drupal4ForumMigration',
+      'class_name' => 'TrizonesForumMigration',
       'description' => t('Migration of forum nodes from Drupal 4'),
-      'machine_name' => 'D4Forum',
+      'machine_name' => 'TZForum',
       'source_type' => 'forum',
       'destination_type' => 'forum',
     ),
@@ -124,8 +124,8 @@ function migrate_trizones_register_migrations() {
   );
   foreach ($node_arguments as $arguments) {
     $arguments = array_merge_recursive($arguments, $common_node_arguments);
-//    Migration::registerMigration($arguments['class_name'], $arguments['machine_name'],
-//                                 $arguments);
+    Migration::registerMigration($arguments['class_name'], $arguments['machine_name'],
+                                 $arguments);
   }
 }
 
