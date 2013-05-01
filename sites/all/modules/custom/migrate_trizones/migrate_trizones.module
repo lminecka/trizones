@@ -116,6 +116,13 @@ function migrate_trizones_register_migrations() {
       'source_type' => 'forum',
       'destination_type' => 'forum',
     ),
+    array(
+      'class_name' => 'TrizonesCoachMigration',
+      'description' => t('Migration of coach nodes from Drupal 4'),
+      'machine_name' => 'TZCoach',
+      'source_type' => 'flexinode-4',
+      'destination_type' => 'coach',
+    ),
   );
   // Tell the node migrations where the users are coming from, so they can
   // set up the dependency and resolve D4->D7 uids.
