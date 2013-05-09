@@ -12,53 +12,6 @@ abstract class TrizonesNodeMigration extends DrupalNode4Migration {
   }
 }
 
-/**
- * Image-specific mappings and handling.
- */
-class TrizonesImageMigration extends TrizonesNodeMigration {
-  public function __construct(array $arguments) {
-    // Add any other data we're pulling into the source row, before the parent
-    // constructor.
-    $this->sourceFields['copyright'] = 'Media copyright notice';
-    $this->sourceFields['filename'] = 'Path of image within mounted filesystem';
-
-    parent::__construct($arguments);
-
-    $this->addFieldMapping('field_credit', 'copyright');
-    $arguments = array('source_path' => '/mnt/source_images');
-    $this->addFieldMapping('field_main_image', 'filename')
-         ->arguments($arguments);
-  }
-
-  /**
-   * Implementation of Migration::prepareRow().
-   *
-   * Here we pull in additional data from a non-core, non-CCK table.
-   *
-   * @param $row
-   */
-  public function prepareRow($row) {
-    if (parent::prepareRow($row) === FALSE) {
-      return FALSE;
-    }
-
-    $image_row = Database::getConnection('default', $this->sourceConnection)
-                 ->select('custom_image_table', 'i')
-                 ->fields('i', array('copyright', 'filename'))
-                 ->condition('vid', $row->vid)
-                 ->execute()
-                 ->fetchObject();
-    if ($image_row) {
-      $row->copyright = $image_row->copyright;
-      $row->filename = $image_row->filename;
-    }
-    else {
-      $this->saveMessage(t('No custom_image_table data for image node with vid !vid',
-                         array('!vid' => $row->vid)));
-    }
-  }
-}
-
 class TrizonesCoachMigration extends TrizonesNodeMigration {
   public function __construct(array $arguments) {
     
@@ -153,7 +106,7 @@ class TrizonesCoachMigration extends TrizonesNodeMigration {
 				$row->position_ignore_case = true;
 				$row->position_source_type = 'tid';
 				
-				$row->JobTitle_lanague = 'en';
+				$row->JobTitle_language = 'en';
 				$row->language = 'en';
 			}
 			$label = str_replace(' ', '', $coach_row['label']);
@@ -231,4 +184,124 @@ class TrizonesForumMigration extends TrizonesNodeMigration {
                          array('!vid' => $row->vid)));
     }
   }
+}
+
+class TrizonesRaceMigration extends TrizonesNodeMigration {
+  public function __construct(array $arguments) {
+    
+ 		$this->sourceFields['Distance'] = '';
+ 		$this->sourceFields['Distance_language'] = '';
+    $this->sourceFields['language'] = '';
+    $this->sourceFields['Location'] = '';
+    $this->sourceFields['Logo'] = '';
+    // additional fields for file fields
+    $this->sourceFields['Logo_file_class'] = '';
+    $this->sourceFields['Logo_language'] = '';
+    $this->sourceFields['Logo_destination_dir'] = '';
+    $this->sourceFields['Logo_destination_file'] = '';
+    $this->sourceFields['Logo_file_replace'] = '';
+    $this->sourceFields['Logo_preserve_files'] = '';
+    $this->sourceFields['Logo_source_dir'] = '';
+    $this->sourceFields['Logo_description'] = '';
+    $this->sourceFields['Logo_display'] = '';
+    $this->sourceFields['RaceDescription'] = '';
+    $this->sourceFields['Registration'] = '';
+    $this->sourceFields['race_type'] = '';
+    // additional fields for term reference fields
+    $this->sourceFields['race_type_create_term'] = '';
+    $this->sourceFields['race_type_ignore_case'] = '';
+    $this->sourceFields['race_type_source_type'] = '';
+
+		$this->addFieldMapping('body', 'RaceDescription');
+		$this->addFieldMapping('field_distance', 'Distance');
+		$this->addFieldMapping('field_distance:language', 'Distance_language');
+		$this->addFieldMapping('field_location', 'Location');
+		$this->addFieldMapping('field_race_logo', 'Logo');
+		$this->addFieldMapping('field_race_logo:file_class', 'Logo_file_class');
+		$this->addFieldMapping('field_race_logo:language', 'Logo_language');
+    $this->addFieldMapping('field_race_logo:destination_dir', 'Logo_destination_dir');
+    $this->addFieldMapping('field_race_logo:destination_file', 'Logo_destination_file');
+    $this->addFieldMapping('field_race_logo:file_replace', 'Logo_file_replace');
+    $this->addFieldMapping('field_race_logo:preserve_files', 'Logo_preserve_files');
+    $this->addFieldMapping('field_race_logo:source_dir', 'Logo_source_dir');
+    $this->addFieldMapping('field_race_logo:description', 'Logo_description');
+    $this->addFieldMapping('field_race_logo:display', 'Logo_display');
+		$this->addFieldMapping('field_race_type', 'race_type');
+		$this->addFieldMapping('field_race_type:create_term', 'race_type_create_term');
+		$this->addFieldMapping('field_race_type:ignore_case', 'race_type_ignore_case');
+		$this->addFieldMapping('field_race_type:source_type', 'race_type_source_type');
+		$this->addFieldMapping('language', 'language');
+		
+		$this->addFieldMapping('tnid', NULL);
+		$this->addFieldMapping('translate', NULL);
+ 			
+    parent::__construct($arguments);
+
+  }
+  
+  /**
+   * Implementation of Migration::prepareRow().
+   *
+   * Here we pull in additional data from a non-core, non-CCK table.
+   *
+   * @param $row
+   */
+  public function prepareRow($row) {
+    if (parent::prepareRow($row) === FALSE) {
+      return FALSE;
+    }
+
+    $race_rows = Database::getConnection('default', $this->sourceConnection)
+				->select('node', 'n')
+				->join('node_revisions', 'r', 'n.nid = r.nid')
+				->join('term_node', 'tn', 'n.nid = tn.nid')
+				->join('flexinode_data', 'fd', 'n.nid = fd.nid')
+				->join('flexinode_field', 'ff', 'fd.field_id = ff.field_id')
+ 				->fields('fd', array('textual_data', 'serialized_data'))
+ 				->fields('ff', array('label'))
+ 				->fields('tn', array('tid'))
+ 				->condition('n.type', 'flexinode-2')
+ 				->condition('ff.ctype_id', '2')
+        ->condition('r.vid', $row->vid)
+                 ->execute()
+                 ->fetchAll();
+     
+      
+    if (!$race_rows) {
+    	$this->saveMessage(t('No Race data for node with vid !vid',
+                         array('!vid' => $row->vid)));
+      return;
+    }
+		for($i=0; $i< count($race_rows); $i++) {
+			$race_row = $race_rows[$i];
+			if ($i == 0) {
+				$row->race_type = $race_row->tid;
+				$row->race_type_create_term = false;
+				$row->race_type_ignore_case = true;
+				$row->race_type_source_type = 'tid';
+				
+				$row->Distance_language = 'en';
+				$row->language = 'en';
+			}
+			$label = str_replace(' ', '', $race_row['label']);
+			
+			if ($label == 'Logo') {
+				$values = unserialize($race_row->serialized_data);
+				$source_dir = '/Users/lhb/Sites/trizones/trizones_d4/'.$values->filepath;
+				$row->Logo_file_class = 'MigrateFileUri';
+				$row->Logo_language = 'en';
+				$row->Logo_destination_dir = 'races/logos';
+				$row->Logo_destination_file = '';
+				$row->Logo_file_replace = FILE_EXISTS_RENAME;
+				$row->Logo_preserve_files = false;
+				$row->Logo_source_dir = $source_dir;
+				$row->Logo_description = '';
+				$row->Logo_display = '';
+			} else {
+			//	$eval = '$row->'.$label.' = $row->textual_value;';
+				$row->$label = $row->textual_value;
+				watchdog('migrate', $label);
+			}
+		}
+	}
 }
