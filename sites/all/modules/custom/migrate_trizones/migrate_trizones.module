@@ -130,6 +130,13 @@ function migrate_trizones_register_migrations() {
       'source_type' => 'flexinode-2',
       'destination_type' => 'race',
     ),
+     array(
+      'class_name' => 'TrizonesResourceMigration',
+      'description' => t('Migration of resource nodes from Drupal 4'),
+      'machine_name' => 'TZResource',
+      'source_type' => 'flexinode-3',
+      'destination_type' => 'resource',
+    ),
   );
   // Tell the node migrations where the users are coming from, so they can
   // set up the dependency and resolve D4->D7 uids.
