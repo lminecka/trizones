@@ -274,11 +274,7 @@ class TrizonesRaceMigration extends TrizonesNodeMigration {
    * @param $row
    */
   public function prepareRow($row) {
-  	watchdog('hotdog', 'pa');
-    if (parent::prepareRow($row) === FALSE) {
-      return FALSE;
-    }
-		watchdog('hotdog', 'pb');
+  	watchdog('migrate_triones', 'race: prepareRow');
     $race_rows = Database::getConnection('default', $this->sourceConnection)
 				->select('node', 'n')
 				->join('node_revisions', 'r', 'n.nid = r.nid')
@@ -305,7 +301,6 @@ class TrizonesRaceMigration extends TrizonesNodeMigration {
 		for($i=0; $i< count($race_rows); $i++) {
 			$race_row = $race_rows[$i];
 			
-			print_r($race_row);
 			if ($i == 0) {
 				$row->race_type = $race_row->tid;
 				$row->race_type_create_term = false;

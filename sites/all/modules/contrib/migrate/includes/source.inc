@@ -246,6 +246,7 @@ abstract class MigrateSource implements Iterator {
    * implement getNextRow() to retrieve the next valid source rocord to process.
    */
   public function next() {
+  	watchdog('migrate', 'next'); 
     $this->currentKey = NULL;
     $this->currentRow = NULL;
     migrate_instrument_start(get_class($this) . ' getNextRow');
