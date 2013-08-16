@@ -14,8 +14,7 @@ abstract class TrizonesNodeMigration extends DrupalNode4Migration {
 
 class TrizonesCoachMigration extends TrizonesNodeMigration {
   public function __construct(array $arguments) {
-    
-		
+  
  		$this->sourceFields['Bio'] = '';
  		$this->sourceFields['Email'] = '';
  		$this->sourceFields['JobTitle'] = '';
@@ -68,7 +67,10 @@ class TrizonesCoachMigration extends TrizonesNodeMigration {
   /**
    * Implementation of Migration::prepareRow().
    *
-   * Here we pull in additional data from a non-core, non-CCK table.
+   * In the Drupal 4 install we are migrating from; they were using an early form of CCK called flexinodes
+   * The coach type was flexinode-4
+   * We need to collect the data in the flexinodes table, mapped by it's fields & felxinode type.
+   *
    *
    * @param $row
    */
@@ -77,20 +79,19 @@ class TrizonesCoachMigration extends TrizonesNodeMigration {
       return FALSE;
     }
 
-    $coach_rows = Database::getConnection('default', $this->sourceConnection)
-				->select('node', 'n')
-				->join('node_revisions', 'r', 'n.nid = r.nid')
-				->join('term_node', 'tn', 'n.nid = tn.nid')
-				->join('flexinode_data', 'fd', 'n.nid = fd.nid')
-				->join('flexinode_field', 'ff', 'fd.field_id = ff.field_id')
- 				->fields('fd', array('textual_data', 'serialized_data'))
- 				->fields('ff', array('label'))
- 				->fields('tn', array('tid'))
- 				->condition('n.type', 'flexinode-4')
- 				->condition('ff.ctype_id', '4')
-        ->condition('r.vid', $row->vid)
-                 ->execute()
-                 ->fetchAll();
+    $query = Database::getConnection('default', $this->sourceConnection)
+				->select('node', 'n');
+		$query->join('node_revisions', 'r', 'n.nid = r.nid');
+		$query->join('term_node', 'tn', 'n.nid = tn.nid');
+		$query->join('flexinode_data', 'fd', 'n.nid = fd.nid');
+		$query->join('flexinode_field', 'ff', 'fd.field_id = ff.field_id');
+		$query->fields('fd', array('textual_data', 'serialized_data'));
+		$query->fields('ff', array('label'));
+		$query->fields('tn', array('tid'));
+		$query->conditions('n.type', 'flexinode-4');
+		$query->conditions('ff.ctype_id', '4');
+    $query->condition('r.vid', $row->vid);
+    $coach_rows = $query->execute()->fetchAll();
      
       
     if (!$coach_rows) {
@@ -109,7 +110,7 @@ class TrizonesCoachMigration extends TrizonesNodeMigration {
 				$row->JobTitle_language = 'en';
 				$row->language = 'en';
 			}
-			$label = str_replace(' ', '', $coach_row['label']);
+			$label = str_replace(' ', '', $coach_row->label);
 			
 			if ($label == 'Photograph') {
 				$values = unserialize($coach_row->serialized_data);
@@ -188,8 +189,6 @@ class TrizonesForumMigration extends TrizonesNodeMigration {
 
 class TrizonesRaceMigration extends TrizonesNodeMigration {
   public function __construct(array $arguments) {
-  
-  watchdog('hot dog', 'fries');
     
     $this->sourceFields9['Date'] = '';
  		$this->sourceFields['Distance'] = '';
@@ -227,7 +226,7 @@ class TrizonesRaceMigration extends TrizonesNodeMigration {
     $this->sourceFields['race_type_ignore_case'] = '';
     $this->sourceFields['race_type_source_type'] = '';
 
-		$this->addFieldMapping('body', 'RaceDescription');
+		$this->addFieldMapping('body', 'RaceDescription ');
 		$this->addFieldMapping('field_datetime', 'Date');
 		$this->addFieldMapping('field_race_location', 'Location');
 		$this->addFieldMapping('field_race_location:name', 'Location_name');
@@ -251,7 +250,9 @@ class TrizonesRaceMigration extends TrizonesNodeMigration {
     $this->addFieldMapping('field_race_logo:source_dir', 'Logo_source_dir');
     $this->addFieldMapping('field_race_logo:description', 'Logo_description');
     $this->addFieldMapping('field_race_logo:display', 'Logo_display');
-		$this->addFieldMapping('field_race_type', 'race_type');
+		$this->addFieldMapping('field_race_type', 'race_type')
+			->sourceMigration('TZRaceTypeTerms')
+      ->arguments(array('source_type' => 'tid'));
 		$this->addFieldMapping('field_race_type:create_term', 'race_type_create_term');
 		$this->addFieldMapping('field_race_type:ignore_case', 'race_type_ignore_case');
 		$this->addFieldMapping('field_race_type:source_type', 'race_type_source_type');
@@ -266,31 +267,52 @@ class TrizonesRaceMigration extends TrizonesNodeMigration {
 
   }
   
-  /**
+    /**
+   * Query for basic node fields from Drupal 4.
+   *
+   * @return QueryConditionInterface
+   */
+  protected function query() {
+    $query = Database::getConnection('default', $this->sourceConnection)
+             ->select('node', 'n')
+             ->fields('n', array('nid', 'vid', 'title',
+                 'uid', 'status', 'created', 'changed', 'comment', 'promote',
+                 'moderate', 'sticky'))
+             ->condition('type', $this->sourceType)
+             ->orderBy('changed');
+    $query->innerJoin('node_revisions', 'nr', 'n.vid=nr.vid');
+    $query->leftJoin('term_node', 'tn', 'n.nid=tn.nid');
+    $query->fields('nr', array('body', 'teaser', 'format'));
+    $query->fields('tn', array('tid'), array('race_type'));
+    
+    return $query;
+  }
+	  /**
    * Implementation of Migration::prepareRow().
    *
-   * Here we pull in additional data from a non-core, non-CCK table.
+   * In the Drupal 4 install we are migrating from; they were using an early form of CCK called flexinodes
+   * The race type was flexinode-2
+   * We need to collect the data in the flexinodes table, mapped by it's fields & felxinode type.
    *
    * @param $row
    */
   public function prepareRow($row) {
   	watchdog('migrate_triones', 'race: prepareRow');
-    $race_rows = Database::getConnection('default', $this->sourceConnection)
-				->select('node', 'n')
-				->join('node_revisions', 'r', 'n.nid = r.nid')
-				->join('term_node', 'tn', 'n.nid = tn.nid')
-				->join('flexinode_data', 'fd', 'n.nid = fd.nid')
-				->join('flexinode_field', 'ff', 'fd.field_id = ff.field_id')
- 				->fields('fd', array('textual_data', 'serialized_data'))
- 				->fields('ff', array('label'))
- 				->fields('tn', array('tid'))
- 				->condition('n.type', 'flexinode-2')
- 				->condition('ff.ctype_id', '2')
-        ->condition('r.vid', $row->vid)
-                 ->execute()
-                 ->fetchAll();
+    $query = Database::getConnection('default', $this->sourceConnection)
+    	->select('node', 'n');
+		$query->join('node_revisions', 'r', 'n.nid = r.nid');
+				$query->join('term_node', 'tn', 'n.nid = tn.nid');
+				$query->join('flexinode_data', 'fd', 'n.nid = fd.nid');
+				$query->join('flexinode_field', 'ff', 'fd.field_id = ff.field_id');
+ 				$query->fields('fd', array('textual_data', 'serialized_data'));
+ 				$query->fields('ff', array('label'));
+ 				$query->fields('tn', array('tid'));
+ 				$query->condition('n.type', 'flexinode-2');
+ 				$query->condition('ff.ctype_id', '2');
+        $query->condition('r.vid', $row->vid);
+      	$race_rows = $query->execute()->fetchAll();
+       
      
-    watchdog('hotdog', 'pc');
     if (!$race_rows) {
     	$this->saveMessage(t('No Race data for node with vid !vid',
                          array('!vid' => $row->vid)));
@@ -298,11 +320,18 @@ class TrizonesRaceMigration extends TrizonesNodeMigration {
                          array('!vid' => $row->vid)));
       return;
     }
+    // here is where will will loop through all the flexinode fields
 		for($i=0; $i< count($race_rows); $i++) {
 			$race_row = $race_rows[$i];
+			$label = str_replace(' ', '', $race_row->label);
 			
+			$row->$label = $row->textual_value;
+			
+			// the regular node data will be present for every iteration of the flexinode data
+			// we're just setting it the first time.
 			if ($i == 0) {
-				$row->race_type = $race_row->tid;
+			//	die('tid: '.$race_row->tid);
+			//	$row->race_type = $race_row->tid;
 				$row->race_type_create_term = false;
 				$row->race_type_ignore_case = true;
 				$row->race_type_source_type = 'tid';
@@ -310,8 +339,8 @@ class TrizonesRaceMigration extends TrizonesNodeMigration {
 				$row->Distance_language = 'en';
 				$row->language = 'en';
 			}
-			$label = str_replace(' ', '', $race_row['label']);
-			watchdog('hotdog', $race_row['label']);
+		
+			// for the Logo field we will need to save the old file path along with all the new file settings
 			if ($label == 'Logo') {
 				$values = unserialize($race_row->serialized_data);
 				$source_dir = '/Users/lhb/Sites/trizones/trizones_d4/'.$values->filepath;
@@ -325,17 +354,24 @@ class TrizonesRaceMigration extends TrizonesNodeMigration {
 				$row->Logo_description = '';
 				$row->Logo_display = '';
 			} else if ($label = 'Location') {
-				echo 'froggage';
-				$text = $race_row['textual_data'];
-				if (preg_match('/([A-z ]+), *([A-z ])/', $text, $matches)) {
-					print_r($matches);
+				
+			// most of the locations were simply stored as "city, state" so this regex matches for that
+			// and saves those values in the associated location fields.  if it doesn't match that we are just
+			// going to put whatever it is into the location name
+				if (preg_match('/([A-z ]+), *([A-z ]+)/', $race_row->textual_data, $matches)) {
+					$row->Location_city = $matches[1];
+					$row->Location_province = $matches[2];
+				} else {
+					$row->Location_name = $race_row->textual_data;
 				}
-				$matches_s = print_r($matches, true);
-				watchdog('hotdog', $matches_s);
+			} else if ($label = 'Race Description') {
+				die('desc');
+				$row->body = $row->textual_value;
 			} else {
-			//	$eval = '$row->'.$label.' = $row->textual_value;';
-				$row->$label = $row->textual_value;
-				watchdog('migrate', $label);
+				$row->$label = $row->textual_data;
+				
+			//	watchdog('migrate', $eval);
+			//	eval($eval);
 			}
 		}
 	}
@@ -408,16 +444,16 @@ class TrizonesResourceMigration extends TrizonesNodeMigration {
     }
 
     $resource_rows = Database::getConnection('default', $this->sourceConnection)
-				->select('node', 'n')
-				->join('node_revisions', 'r', 'n.nid = r.nid')
-				->join('term_node', 'tn', 'n.nid = tn.nid')
-				->join('flexinode_data', 'fd', 'n.nid = fd.nid')
-				->join('flexinode_field', 'ff', 'fd.field_id = ff.field_id')
- 				->fields('fd', array('textual_data', 'serialized_data'))
- 				->fields('ff', array('label'))
- 				->fields('tn', array('tid'))
- 				->condition('n.type', 'flexinode-3')
- 				->condition('ff.ctype_id', '3')
+				->select('node', 'n');
+		$query->join('node_revisions', 'r', 'n.nid = r.nid');
+		$query->join('term_node', 'tn', 'n.nid = tn.nid');
+		$query->join('flexinode_data', 'fd', 'n.nid = fd.nid');
+		$query->join('flexinode_field', 'ff', 'fd.field_id = ff.field_id');
+		$query->fields('fd', array('textual_data', 'serialized_data'));
+		$query->fields('ff', array('label'));
+		$query->fields('tn', array('tid'));
+		$query->conditions('n.type', 'flexinode-3');
+		$query->conditions('ff.ctype_id', '3')
         ->condition('r.vid', $row->vid)
                  ->execute()
                  ->fetchAll();

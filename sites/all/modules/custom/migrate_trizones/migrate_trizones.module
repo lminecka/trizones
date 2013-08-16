@@ -62,6 +62,12 @@ function migrate_trizones_register_migrations() {
       'destination_vocabulary' => 'races',
     ),
     array(
+      'description' => t('Migration of Race Type terms from Drupal 4'),
+      'machine_name' => 'TZRaceTypeTerms',
+      'source_vocabulary' => '7',
+      'destination_vocabulary' => 'race_types',
+    ),
+    array(
       'description' => t('Migration of Resource terms from Drupal 4'),
       'machine_name' => 'TZResourceTerms',
       'source_vocabulary' => '5', 
