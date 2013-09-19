@@ -250,7 +250,7 @@ $databases = array (
  * After finishing the upgrade, be sure to open this file again and change the
  * TRUE back to a FALSE!
  */
-$update_free_access = FALSE;
+$update_free_access = TRUE;
 
 /**
  * Salt for one-time login links and cancel links, form tokens, etc.
@@ -291,7 +291,7 @@ $drupal_hash_salt = '2xSF_i0Jws_-2ZxcaDtAKQ19xm6trMgsbk5_EZareRI';
  * It is not allowed to have a trailing slash; Drupal will add it
  * for you.
  */
-//$base_url = 'http://trizones.local';  // NO trailing slash!
+#$base_url = 'http://trizones.local';  // NO trailing slash!
 
 /**
  * PHP settings:
