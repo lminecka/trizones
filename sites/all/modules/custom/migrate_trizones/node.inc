@@ -323,9 +323,17 @@ class TrizonesRaceMigration extends TrizonesNodeMigration {
     // here is where will will loop through all the flexinode fields
 		for($i=0; $i< count($race_rows); $i++) {
 			$race_row = $race_rows[$i];
+			$prr = print_r($race_row, true);
+			watchdog("migrate_trizones", "race_row: $prr");
 			$label = str_replace(' ', '', $race_row->label);
+			$textual_data = $race_row->textual_data ? $race_row->textual_data : '';
 			
-			$row->$label = $row->textual_value;
+			if ($textual_data) {
+				$row->$label = $row->textual_value;
+		//		watchdog('migrate_trizones', "text: ".$row->$label);
+			} else {
+		//		watchdog('migrate_trizones', "no text value");
+			}
 			
 			// the regular node data will be present for every iteration of the flexinode data
 			// we're just setting it the first time.
@@ -342,8 +350,12 @@ class TrizonesRaceMigration extends TrizonesNodeMigration {
 		
 			// for the Logo field we will need to save the old file path along with all the new file settings
 			if ($label == 'Logo') {
-				$values = unserialize($race_row->serialized_data);
-				$source_dir = '/Users/lhb/Sites/trizones/trizones_d4/'.$values->filepath;
+				$values = $race_row->serialized_data ? unserialize($race_row->serialized_data) : array();
+				
+				$printr = print_r($values, true);
+				watchdog("migrate_trizones", "values: $printr");
+				watchdog("migrate_trizones", "file: $printr");
+				$source_dir = '/Users/lhb/Sites/trizones/trizones_d4/files/'.$file_name;
 				$row->Logo_file_class = 'MigrateFileUri';
 				$row->Logo_language = 'en';
 				$row->Logo_destination_dir = 'races/logos';
@@ -358,11 +370,11 @@ class TrizonesRaceMigration extends TrizonesNodeMigration {
 			// most of the locations were simply stored as "city, state" so this regex matches for that
 			// and saves those values in the associated location fields.  if it doesn't match that we are just
 			// going to put whatever it is into the location name
-				if (preg_match('/([A-z ]+), *([A-z ]+)/', $race_row->textual_data, $matches)) {
+				if (preg_match('/([A-z ]+), *([A-z ]+)/', $textual_data, $matches)) {
 					$row->Location_city = $matches[1];
 					$row->Location_province = $matches[2];
 				} else {
-					$row->Location_name = $race_row->textual_data;
+					$row->Location_name = $textual_data;
 				}
 			} else if ($label = 'Race Description') {
 				die('desc');
