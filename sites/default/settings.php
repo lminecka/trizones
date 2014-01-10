@@ -216,8 +216,8 @@ $databases = array (
     'default' => 
     array (
       'database' => 'trizones',
-      'username' => 'root',
-      'password' => 'root',
+      'username' => 'stedsDrupal',
+      'password' => 'sT3dsDruP4l',
       'host' => 'localhost',
       'port' => '',
       'driver' => 'mysql',
@@ -229,8 +229,8 @@ $databases = array (
     'default' => 
     array (
       'database' => 'trizones_d4',
-      'username' => 'root',
-      'password' => 'root',
+     'username' => 'stedsDrupal',
+      'password' => 'sT3dsDruP4l',
       'host' => 'localhost',
       'port' => '',
       'driver' => 'mysql',
