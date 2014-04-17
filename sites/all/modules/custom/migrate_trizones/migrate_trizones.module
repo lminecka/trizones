@@ -62,6 +62,12 @@ function migrate_trizones_register_migrations() {
       'destination_vocabulary' => 'races',
     ),
     array(
+      'description' => t('Migration of Race Type terms from Drupal 4'),
+      'machine_name' => 'TZRaceTypeTerms',
+      'source_vocabulary' => '7',
+      'destination_vocabulary' => 'race_types',
+    ),
+    array(
       'description' => t('Migration of Resource terms from Drupal 4'),
       'machine_name' => 'TZResourceTerms',
       'source_vocabulary' => '5', 
@@ -110,11 +116,32 @@ function migrate_trizones_register_migrations() {
   // and destination_type are required arguments.
    $node_arguments = array(
     array(
-      'class_name' => 'Drupal4ForumMigration',
+      'class_name' => 'TrizonesCoachMigration',
+      'description' => t('Migration of coach nodes from Drupal 4'),
+      'machine_name' => 'TZCoach',
+      'source_type' => 'flexinode-4',
+      'destination_type' => 'coach',
+    ),
+    array(
+      'class_name' => 'TrizonesForumMigration',
       'description' => t('Migration of forum nodes from Drupal 4'),
-      'machine_name' => 'D4Forum',
+      'machine_name' => 'TZForum',
       'source_type' => 'forum',
       'destination_type' => 'forum',
+    ),
+    array(
+      'class_name' => 'TrizonesRaceMigration',
+      'description' => t('Migration of race nodes from Drupal 4'),
+      'machine_name' => 'TZRace',
+      'source_type' => 'flexinode-2',
+      'destination_type' => 'race',
+    ),
+     array(
+      'class_name' => 'TrizonesResourceMigration',
+      'description' => t('Migration of resource nodes from Drupal 4'),
+      'machine_name' => 'TZResource',
+      'source_type' => 'flexinode-3',
+      'destination_type' => 'resource',
     ),
   );
   // Tell the node migrations where the users are coming from, so they can
@@ -124,8 +151,8 @@ function migrate_trizones_register_migrations() {
   );
   foreach ($node_arguments as $arguments) {
     $arguments = array_merge_recursive($arguments, $common_node_arguments);
-//    Migration::registerMigration($arguments['class_name'], $arguments['machine_name'],
-//                                 $arguments);
+    Migration::registerMigration($arguments['class_name'], $arguments['machine_name'],
+                                 $arguments);
   }
 }
 
