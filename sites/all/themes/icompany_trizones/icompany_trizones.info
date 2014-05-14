@@ -1,5 +1,5 @@
 name = Theme for Trizones based off Inno Company
-description = This is a multipurpose Drupal theme with loads of customization options. Apart from corporate/portfolio, you can use this theme in various other websites too. Theme by <a href="http://www.worthapost.com/">Worthapost</a>. <br/>Like this theme? Please give us 5 star on themeforest
+description = Theme for Trizones upgrade to Drupal 7
 version = 1.5.05
 core = 7.x
 engine = phptemplate
@@ -107,7 +107,7 @@ settings[theme_color_scheme] = 529228
 
 ; Misc settings
 settings[use_login_links] = 1
-settings[icompany_breadcrumb] = 1
+settings[icompany_trizones_breadcrumb] = 1
 settings[show_feedback_link] = 1 
 settings[footer_note] = '' 
 settings[logo_top_margin] = 35 

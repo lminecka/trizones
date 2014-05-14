@@ -15,7 +15,7 @@
     <link href='<?php print get_google_css_string() ?>' rel='stylesheet' type='text/css'/> 
     <?php } ?>
     
-    <?php  include_once drupal_get_path('theme', 'icompany') . "/includes/css_include.php"; ?>  
+    <?php  include_once drupal_get_path('theme', 'icompany_trizones') . "/includes/css_include.php"; ?>  
 
     <!--[if lt IE 7]>
     <![endif]-->
@@ -195,7 +195,7 @@
     </script>
     
 </head>
-<body class="<?php print $classes; ?> icompany"  <?php print $attributes;?>>
+<body class="<?php print $classes; ?> icompany_trizones"  <?php print $attributes;?>>
   <?php print $page_top; ?>
   <?php print $page; ?>
   <?php print $page_bottom; ?>

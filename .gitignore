@@ -1,5 +1,7 @@
 sites/default/
 
+tmp/*
+
 # OS generated files #
 ######################
 .DS_Store

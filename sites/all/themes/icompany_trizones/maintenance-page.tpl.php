@@ -14,7 +14,7 @@
     <link href='<?php print get_google_css_string() ?>' rel='stylesheet' type='text/css'/> 
     <?php } ?>
     
-    <?php  include_once drupal_get_path('theme', 'icompany') . "/includes/css_include.php"; ?> 
+    <?php  include_once drupal_get_path('theme', 'icompany_trizones') . "/includes/css_include.php"; ?> 
     <?php print $scripts ?>
 
 

@@ -1,7 +1,7 @@
 /*
- Theme Name: iCompany
+ Theme Name: iCompany Trizones
  Theme URI: -
- Description: iCompany multipurpose Drupal theme
+ Description: Trizone's theme; based on iCompany
  Version: 1.0
  Author: Worthapost
  Author URI: http://www.worthapost.com
@@ -2359,7 +2359,7 @@ tr.even, tr.odd {
 	box-shadow: 0 2px 3px rgba(100,100,100,.2);
 }
 
-/* icompany icons. We have used Token icons from brsev (http://brsev.deviantart.com/art/Token-128429570)*/
+/* icompany_trizones icons. We have used Token icons from brsev (http://brsev.deviantart.com/art/Token-128429570)*/
 [class^="icon48-"], [class*=" icon48-"] {
 	display: inline-block;
 	width: 48px;

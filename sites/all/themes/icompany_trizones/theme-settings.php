@@ -1,7 +1,7 @@
-<?php
+s<?php
 
 //load google fonts array
-include_once( drupal_get_path('theme', 'icompany') . '/includes/google-fonts.php');
+include_once( drupal_get_path('theme', 'icompany_trizones') . '/includes/google-fonts.php');
     
 // make array to pe passed in theme settings form
 function get_google_font_array() {
@@ -17,7 +17,7 @@ function get_google_font_array() {
 }
 
 
-function icompany_form_system_theme_settings_alter(&$form, &$form_state) {
+function icompany_trizones_form_system_theme_settings_alter(&$form, &$form_state) {
 
 
 	$form['theme_settings_tab'] = array(
@@ -388,11 +388,11 @@ function icompany_form_system_theme_settings_alter(&$form, &$form_state) {
 		'#default_value' => theme_get_setting('use_login_links'),
 	);
 
-	$form['theme_settings_tab']['misc_settings']['icompany_breadcrumb'] = array(
+	$form['theme_settings_tab']['misc_settings']['icompany_trizones_breadcrumb'] = array(
 		'#type' => 'checkbox',
 		'#title' => t('iCompany\'s style breadcrumb'),
 		'#description' => t('Use iCompany\'s style breadcrumb instead of Drupal default breadcrumb. '),
-		'#default_value' => theme_get_setting('icompany_breadcrumb'),
+		'#default_value' => theme_get_setting('icompany_trizones_breadcrumb'),
 	);
 	
 	$form['theme_settings_tab']['misc_settings']['show_feedback_link'] = array(
@@ -419,7 +419,7 @@ function icompany_form_system_theme_settings_alter(&$form, &$form_state) {
 	);
 	
 	// slider settings form
-	include_once( drupal_get_path('theme', 'icompany') . '/includes/slider_options.php');
+	include_once( drupal_get_path('theme', 'icompany_trizones') . '/includes/slider_options.php');
 	
 	
 	return $form;

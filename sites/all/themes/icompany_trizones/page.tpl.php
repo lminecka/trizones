@@ -96,7 +96,7 @@ $you_here = t("You are here: ");
 				<div class="span3 loginlinks">
 					<?php if(theme_get_setting('use_login_links') == 1) { ?>
 						<div id="user_links">			
-							<?php if (!($user->uid)) { print user_login_links(); } else { print  icompany_welcome_user(); } ?>	
+							<?php if (!($user->uid)) { print user_login_links(); } else { print  icompany_trizones_welcome_user(); } ?>	
 						</div>
 					<?php } ?>
 				</div>
@@ -440,7 +440,7 @@ $you_here = t("You are here: ");
 						<h1 class="page-title"><?php print $title ?></h1>  
 						<?php print render($title_suffix); ?>
 					</div>
-				<?php if(!empty($breadcrumb)){  if(theme_get_setting('icompany_breadcrumb') == '1') print '<div class="breadcrumb">' . "<div id='home-icon'> <a href='$base_path'>" . ' <span class="icon-home"></span></a> </div> ' . $breadcrumb . ' &raquo; ' . breadcrumb_title($title) . '</div>'; elseif(!empty($breadcrumb)) print '<div class="breadcrumb">' . $breadcrumb . '</div>';  ?><?php } ?>						
+				<?php if(!empty($breadcrumb)){  if(theme_get_setting('icompany_trizones_breadcrumb') == '1') print '<div class="breadcrumb">' . "<div id='home-icon'> <a href='$base_path'>" . ' <span class="icon-home"></span></a> </div> ' . $breadcrumb . ' &raquo; ' . breadcrumb_title($title) . '</div>'; elseif(!empty($breadcrumb)) print '<div class="breadcrumb">' . $breadcrumb . '</div>';  ?><?php } ?>						
 				</div>
 			</div>
 		<?php } ?>
@@ -488,7 +488,7 @@ $you_here = t("You are here: ");
 				        <?php if ($show_messages) { print $messages; } ?>
 				        <?php if($help){ ?><?php print render($help); ?><?php } ?>
 				        <?php if(($title) && (upperRegionsExist($upper_blocks1, $upper_blocks2, $upper_blocks3, $upper_blocks4))){ ?>
-				            <?php if(!empty($breadcrumb)){  if(theme_get_setting('icompany_breadcrumb') == '1') print '<div class="breadcrumb">' . $you_here . $breadcrumb . ' &raquo; ' . breadcrumb_title($title) . '</div>'; elseif(!empty($breadcrumb)) print '<div class="breadcrumb">' . $breadcrumb . '</div>';  ?><?php } ?>     
+				            <?php if(!empty($breadcrumb)){  if(theme_get_setting('icompany_trizones_breadcrumb') == '1') print '<div class="breadcrumb">' . $you_here . $breadcrumb . ' &raquo; ' . breadcrumb_title($title) . '</div>'; elseif(!empty($breadcrumb)) print '<div class="breadcrumb">' . $breadcrumb . '</div>';  ?><?php } ?>     
 				        	<?php print render($title_prefix); ?>
 								<h1 class="page-title"><?php print $title ?></h1>  
 							<?php print render($title_suffix); ?>

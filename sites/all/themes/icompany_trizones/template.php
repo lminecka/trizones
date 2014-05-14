@@ -10,24 +10,24 @@
 */
 	
 // load css files
-drupal_add_css(drupal_get_path('theme', 'icompany') .'/css/bootstrap.css',  array(  'group' => 'CSS_THEME', 'weight' => 93));
-drupal_add_css(drupal_get_path('theme', 'icompany') .'/style.css',  array(  'group' => 'CSS_THEME', 'weight' => 96));
-drupal_add_css(drupal_get_path('theme', 'icompany') .'/customize_icompany.css',  array(  'group' => 'CSS_THEME', 'weight' => 97));
+drupal_add_css(drupal_get_path('theme', 'icompany_trizones') .'/css/bootstrap.css',  array(  'group' => 'CSS_THEME', 'weight' => 93));
+drupal_add_css(drupal_get_path('theme', 'icompany_trizones') .'/style.css',  array(  'group' => 'CSS_THEME', 'weight' => 96));
+drupal_add_css(drupal_get_path('theme', 'icompany_trizones') .'/customize_icompany_trizones.css',  array(  'group' => 'CSS_THEME', 'weight' => 97));
 
 
 // Misc
-drupal_add_js(drupal_get_path('theme', 'icompany') . '/js/bootstrap.js', array('type' => 'file', 'scope' => 'footer', 'group' => 'JS_LIBRARY', 'weight' => 20));
-drupal_add_js(drupal_get_path('theme', 'icompany') . '/js/selectnav.min.js', array('type' => 'file', 'scope' => 'header', 'group' => 'JS_LIBRARY', 'weight' => 40));
+drupal_add_js(drupal_get_path('theme', 'icompany_trizones') . '/js/bootstrap.js', array('type' => 'file', 'scope' => 'footer', 'group' => 'JS_LIBRARY', 'weight' => 20));
+drupal_add_js(drupal_get_path('theme', 'icompany_trizones') . '/js/selectnav.min.js', array('type' => 'file', 'scope' => 'header', 'group' => 'JS_LIBRARY', 'weight' => 40));
 
 // colorbox
-drupal_add_js(drupal_get_path('theme', 'icompany') . '/js/jquery.colorbox-min.js', array('type' => 'file', 'scope' => 'header', 'group' => 'JS_LIBRARY', 'weight' => 42));
-drupal_add_css(drupal_get_path('theme', 'icompany') .'/css/colorbox.css',  array(  'group' => 'CSS_THEME', 'weight' => 98));
+drupal_add_js(drupal_get_path('theme', 'icompany_trizones') . '/js/jquery.colorbox-min.js', array('type' => 'file', 'scope' => 'header', 'group' => 'JS_LIBRARY', 'weight' => 42));
+drupal_add_css(drupal_get_path('theme', 'icompany_trizones') .'/css/colorbox.css',  array(  'group' => 'CSS_THEME', 'weight' => 98));
 
 
 // superfish
-drupal_add_js(drupal_get_path('theme', 'icompany') . '/js/hoverIntent.js', array('type' => 'file', 'scope' => 'header', 'group' => 'JS_LIBRARY', 'weight' => 25));
-drupal_add_js(drupal_get_path('theme', 'icompany') . '/js/superfish.js', array('type' => 'file', 'scope' => 'header', 'group' => 'JS_LIBRARY', 'weight' => 30));
-drupal_add_css(drupal_get_path('theme', 'icompany') .'/css/superfish.css',  array(  'group' => 'CSS_THEME', 'weight' => 93));
+drupal_add_js(drupal_get_path('theme', 'icompany_trizones') . '/js/hoverIntent.js', array('type' => 'file', 'scope' => 'header', 'group' => 'JS_LIBRARY', 'weight' => 25));
+drupal_add_js(drupal_get_path('theme', 'icompany_trizones') . '/js/superfish.js', array('type' => 'file', 'scope' => 'header', 'group' => 'JS_LIBRARY', 'weight' => 30));
+drupal_add_css(drupal_get_path('theme', 'icompany_trizones') .'/css/superfish.css',  array(  'group' => 'CSS_THEME', 'weight' => 93));
 
 // Google fonts
 // Prepare Google font css 
@@ -65,7 +65,7 @@ function get_googlefont_style_code(){
 
 	?>
 	
-	body.icompany, #wap-menu ul.sf-menu li span.tip a, .ei-title h3, #main_slider .slider-body, #main_slider .slider-link, .btn{
+	body.icompany_trizones, #wap-menu ul.sf-menu li span.tip a, .ei-title h3, #main_slider .slider-body, #main_slider .slider-link, .btn{
 		font-family: <?php print theme_get_setting('site_fonts_google'); ?>, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 		font-weight: <?php print theme_get_setting('site_fonts_google_weight'); ?>;
 	}
@@ -96,7 +96,7 @@ function get_googlefont_style_code(){
 
 
 // user box
-function icompany_welcome_user(){
+function icompany_trizones_welcome_user(){
 	global $user;
 	$usr_path = 'user/'.$user->uid;
 	$myAccount = drupal_get_path_alias($usr_path);
@@ -133,7 +133,7 @@ function user_login_links(){
 
  
 // menus customization
-function icompany_menu_tree__main_menu($variables) {
+function icompany_trizones_menu_tree__main_menu($variables) {
  	return '<ul id="nav" class="sf-menu">' . $variables['tree'] . '</ul>';
 }
 
@@ -312,7 +312,7 @@ function colorInterpolate($hex, $percent) {
 
 
 // Custom breadcrumb
-function icompany_breadcrumb($breadcrumb) {
+function icompany_trizones_breadcrumb($breadcrumb) {
 	    
     $bc = $breadcrumb['breadcrumb'];
 	if (!empty($bc)) {
@@ -335,7 +335,7 @@ function breadcrumb_title($br)
 
  
 // Preprocess Page
-function icompany_preprocess_page(&$variables) {
+function icompany_trizones_preprocess_page(&$variables) {
   if (isset($variables['secondary_menu'])) {
     $variables['secondary_nav'] = theme('links__system_secondary_menu', array(
       'links' => $variables['secondary_menu'],
@@ -356,7 +356,7 @@ function icompany_preprocess_page(&$variables) {
 
 
 // Customized tabs
-function icompany_menu_local_tasks(&$variables) {
+function icompany_trizones_menu_local_tasks(&$variables) {
   $output = '';
 
   if (!empty($variables['primary'])) {
@@ -375,7 +375,7 @@ function icompany_menu_local_tasks(&$variables) {
   return $output;
 }
 
-function icompany_menu_local_task($variables) {
+function icompany_trizones_menu_local_task($variables) {
   $link = $variables['element']['#link'];
   $link_text = $link['title'];
 
@@ -396,7 +396,7 @@ function icompany_menu_local_task($variables) {
 }
 
 // customize node submitted text
-function icompany_preprocess_node(&$variables) {
+function icompany_trizones_preprocess_node(&$variables) {
   $print_task = t('Print this page');
   if ($variables['submitted']) {
     $variables['submitted'] = t('<span class="icon-calendar"></span> on !datetime &nbsp; <span class=" icon-user"></span> !username <a class="hidden-phone hidden-tablet node-print pull-right" style="line-height:10px;"  data-original-title="!print_text" data-placement="top" rel="tooltip" href="javascript:window.print()"><span class="icon-print"></span></a>', array('!username' => $variables['name'], '!datetime' => $variables['date'], '!print_text' => $print_task));
@@ -428,7 +428,7 @@ function icompany_preprocess_node(&$variables) {
 
 //shortcodes
 
-function icompany_preprocess_field(&$variables) {
+function icompany_trizones_preprocess_field(&$variables) {
 	
 	if(array_key_exists('element', $variables) && array_key_exists("#field_name", $variables['element'])){
 		if($variables['element']['#field_name'] == 'body'){
@@ -487,22 +487,22 @@ function icompany_preprocess_field(&$variables) {
 }
 
 // customize comment submitted text
-function icompany_preprocess_comment(&$variables) {
+function icompany_trizones_preprocess_comment(&$variables) {
     $created = $variables['created'];
     $author = $variables['author'];
     $variables['submitted'] = t("on !date by !author", array('!date' => $created, '!author' => $author));
 }
 
 
-function icompany_preprocess_table(&$variables){
+function icompany_trizones_preprocess_table(&$variables){
 	$variables['attributes']['class'] = array(' table table-striped ');
 }
 
-function icompany_preprocess_button(&$variables) {
+function icompany_trizones_preprocess_button(&$variables) {
   $variables['element']['#attributes']['class'][] = ' btn ';
 }
 
-function icompany_preprocess_simplenews_block(&$vars){
+function icompany_trizones_preprocess_simplenews_block(&$vars){
 	$vars['form']['mail']['#title'] = '';
 	$vars['form']['mail']['#attributes'] = array('placeholder' => 'E-mail…');
 	$vars['form']['mail']['#size'] = 27;
@@ -511,7 +511,7 @@ function icompany_preprocess_simplenews_block(&$vars){
 
 
 //status messages
-function icompany_status_messages($variables) {
+function icompany_trizones_status_messages($variables) {
   $display = $variables['display'];
   $output = '';
 
@@ -698,9 +698,9 @@ function icomp_get_nivo_html(){
 }
 
 if(theme_get_setting('slider_type') == 'nivo'){
-	drupal_add_css(drupal_get_path('theme', 'icompany') .'/sliders/nivo/themes/bar/bar.css', 'theme');
-	drupal_add_css(drupal_get_path('theme', 'icompany') .'/sliders/nivo/nivo-slider.css', 'theme');
-	drupal_add_js(drupal_get_path('theme', 'icompany') . '/sliders/nivo/jquery.nivo.slider.js', array('type' => 'file', 'scope' => 'header', 'group' => 'JS_LIBRARY', 'weight' => 27));
+	drupal_add_css(drupal_get_path('theme', 'icompany_trizones') .'/sliders/nivo/themes/bar/bar.css', 'theme');
+	drupal_add_css(drupal_get_path('theme', 'icompany_trizones') .'/sliders/nivo/nivo-slider.css', 'theme');
+	drupal_add_js(drupal_get_path('theme', 'icompany_trizones') . '/sliders/nivo/jquery.nivo.slider.js', array('type' => 'file', 'scope' => 'header', 'group' => 'JS_LIBRARY', 'weight' => 27));
 	drupal_add_js('
 	(function ($) {
 	   $(window).load(function() {  $(\'#slider\').nivoSlider({effect: \'random\', slices: 15, boxCols: 6, boxRows: 4, pauseTime: 5000, animSpeed: 500,  });});
@@ -781,8 +781,8 @@ function icomp_get_flex_html(){
 
 if(theme_get_setting('slider_type') == 'flex'){
 	// load css and js
-	drupal_add_css(drupal_get_path('theme', 'icompany') .'/sliders/flex/flexslider.css', 'theme');
-	drupal_add_js(drupal_get_path('theme', 'icompany') . '/sliders/flex/jquery.flexslider-min.js', array('type' => 'file', 'scope' => 'header', 'group' => 'JS_LIBRARY', 'weight' => 6));
+	drupal_add_css(drupal_get_path('theme', 'icompany_trizones') .'/sliders/flex/flexslider.css', 'theme');
+	drupal_add_js(drupal_get_path('theme', 'icompany_trizones') . '/sliders/flex/jquery.flexslider-min.js', array('type' => 'file', 'scope' => 'header', 'group' => 'JS_LIBRARY', 'weight' => 6));
 	drupal_add_js('
 	(function ($) {
 	     $(window).load(function() {  $(\'.flexslider\').flexslider({  animation: "slide", slideshowSpeed: 7000});});
@@ -864,12 +864,12 @@ function icomp_get_iview_html(){
 
 if(theme_get_setting('slider_type') == 'iview'){
 	// load css and js
-	drupal_add_css(drupal_get_path('theme', 'icompany') .'/sliders/iview/css/iview.css', 'theme');
-	drupal_add_css(drupal_get_path('theme', 'icompany') .'/sliders/iview/css/skin4/style.css', 'theme');
+	drupal_add_css(drupal_get_path('theme', 'icompany_trizones') .'/sliders/iview/css/iview.css', 'theme');
+	drupal_add_css(drupal_get_path('theme', 'icompany_trizones') .'/sliders/iview/css/skin4/style.css', 'theme');
 		
-	drupal_add_js(drupal_get_path('theme', 'icompany') . '/sliders/iview/js/raphael-min.js', array('type' => 'file', 'scope' => 'header', 'group' => 'JS_LIBRARY', 'weight' => 6));
-	drupal_add_js(drupal_get_path('theme', 'icompany') . '/sliders/iview/js/jquery.easing.js', array('type' => 'file', 'scope' => 'header', 'group' => 'JS_LIBRARY', 'weight' => 7));
-	drupal_add_js(drupal_get_path('theme', 'icompany') . '/sliders/iview/js/iview.min.js', array('type' => 'file', 'scope' => 'header', 'group' => 'JS_LIBRARY', 'weight' => 8));
+	drupal_add_js(drupal_get_path('theme', 'icompany_trizones') . '/sliders/iview/js/raphael-min.js', array('type' => 'file', 'scope' => 'header', 'group' => 'JS_LIBRARY', 'weight' => 6));
+	drupal_add_js(drupal_get_path('theme', 'icompany_trizones') . '/sliders/iview/js/jquery.easing.js', array('type' => 'file', 'scope' => 'header', 'group' => 'JS_LIBRARY', 'weight' => 7));
+	drupal_add_js(drupal_get_path('theme', 'icompany_trizones') . '/sliders/iview/js/iview.min.js', array('type' => 'file', 'scope' => 'header', 'group' => 'JS_LIBRARY', 'weight' => 8));
 
 	drupal_add_js("
 	(function ($) {
@@ -984,7 +984,7 @@ function icomp_get_elastic_html(){
 						
 						$thumb_output .= '<a href="#">'. $title_for_thumb .'</a>';
 						
-						$thumb_output .= '<img src="'. drupal_get_path('theme', 'icompany') .'/timthumb.php?src='. $img_for_thumb .'&h=90&w=120" />';
+						$thumb_output .= '<img src="'. drupal_get_path('theme', 'icompany_trizones') .'/timthumb.php?src='. $img_for_thumb .'&h=90&w=120" />';
 						
 						$thumb_output .= '</li>';
 							
@@ -1001,9 +1001,9 @@ function icomp_get_elastic_html(){
 
 if(theme_get_setting('slider_type') == 'elastic'){
 	// load css and js
-	drupal_add_css(drupal_get_path('theme', 'icompany') .'/sliders/elastic/css/style.css', 'theme');
-	drupal_add_js(drupal_get_path('theme', 'icompany') . '/sliders/elastic/js/jquery.eislideshow.js', array('type' => 'file', 'scope' => 'header', 'group' => 'JS_LIBRARY', 'weight' => 6));
-	drupal_add_js(drupal_get_path('theme', 'icompany') . '/sliders/elastic/js/jquery.easing.1.3.js', array('type' => 'file', 'scope' => 'header', 'group' => 'JS_LIBRARY', 'weight' => 7));	
+	drupal_add_css(drupal_get_path('theme', 'icompany_trizones') .'/sliders/elastic/css/style.css', 'theme');
+	drupal_add_js(drupal_get_path('theme', 'icompany_trizones') . '/sliders/elastic/js/jquery.eislideshow.js', array('type' => 'file', 'scope' => 'header', 'group' => 'JS_LIBRARY', 'weight' => 6));
+	drupal_add_js(drupal_get_path('theme', 'icompany_trizones') . '/sliders/elastic/js/jquery.easing.1.3.js', array('type' => 'file', 'scope' => 'header', 'group' => 'JS_LIBRARY', 'weight' => 7));	
 	drupal_add_js("
 	(function ($) {
     	$(function() {
@@ -1025,21 +1025,21 @@ if(theme_get_setting('slider_type') == 'elastic'){
  * <div id="slider-inner-shadow"></div>
 <div id="ei-slider" class="ei-slider">
 	<ul class="ei-slider-large">
-		<li><img src="http://localhost/icompany/themeforest_package/sites/all/themes/icompany/img/slides/slide1.jpg" alt="" />
+		<li><img src="http://localhost/icompany_trizones/themeforest_package/sites/all/themes/icompany_trizones/img/slides/slide1.jpg" alt="" />
 			<div class="ei-title">
 				<h2 class=' clearfix '><span class='theme-scheme elastic-title-inner'>Lorem Ipsum consequat</span></h2><h3><span class='elastic-body-inner slider-body '>Commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span>
 				<br/>
 				<a class='hidden-phone ei-caption-link btn btn-theme' href='http://example.com'>Get Started</a></h3>
 			</div>
 		</li>
-		<li><img src="http://localhost/icompany/themeforest_package/sites/all/themes/icompany/img/slides/slide2.jpg" alt="" />
+		<li><img src="http://localhost/icompany_trizones/themeforest_package/sites/all/themes/icompany_trizones/img/slides/slide2.jpg" alt="" />
 			<div class="ei-title">
 				<h2 class=' clearfix '><span class='theme-scheme elastic-title-inner'>Lorem Ipsum dolor amet</span></h2><h3><span class='elastic-body-inner slider-body '>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea </span>
 				<br/>
 				<a class='hidden-phone ei-caption-link btn btn-theme' href='#'>Sign up</a></h3>
 			</div>
 		</li>
-		<li><img src="http://localhost/icompany/themeforest_package/sites/all/themes/icompany/img/slides/slide3.jpg" alt="" />
+		<li><img src="http://localhost/icompany_trizones/themeforest_package/sites/all/themes/icompany_trizones/img/slides/slide3.jpg" alt="" />
 			<div class="ei-title">
 				<h2 class=' clearfix '><span class='theme-scheme elastic-title-inner'>Quis nostrud exercitation ullamco</span></h2><h3><span class='elastic-body-inner slider-body '>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea </span>
 				<br/>
@@ -1077,12 +1077,12 @@ function icomp_prepare_piecemaker(){
 	// Open file and write XML stuffs in it	
 	$path = $_SERVER['DOCUMENT_ROOT'];
 	$path = rtrim($path, "/\\");
-	$file = $path . '/' . base_path()  . drupal_get_path('theme', 'icompany') . '/sliders/piecemaker/piecemaker.xml';
+	$file = $path . '/' . base_path()  . drupal_get_path('theme', 'icompany_trizones') . '/sliders/piecemaker/piecemaker.xml';
 
 	$fp = fopen($file, 'r+');
 	$fstring = fread($fp, filesize($file));	
 	
-	// every timy when theme settings form is submitted, piecemaker_slider_helper() from icompany_module.module function writes 'empty' keyword in it
+	// every timy when theme settings form is submitted, piecemaker_slider_helper() from icompany_trizones_module.module function writes 'empty' keyword in it
 	if($fstring == 'empty'){
 		$output = '';
 		
@@ -1165,7 +1165,7 @@ function icomp_prepare_piecemaker(){
 }
  
 if(theme_get_setting('slider_type')  == 'piecemaker'){
-	drupal_add_js(drupal_get_path('theme', 'icompany') . '/sliders/piecemaker/scripts/swfobject/swfobject.js', array('type' => 'file', 'scope' => 'header', 'group' => 'JS_DEFAULT', 'weight' => 25));
+	drupal_add_js(drupal_get_path('theme', 'icompany_trizones') . '/sliders/piecemaker/scripts/swfobject/swfobject.js', array('type' => 'file', 'scope' => 'header', 'group' => 'JS_DEFAULT', 'weight' => 25));
 }
 
 /*
@@ -1174,7 +1174,7 @@ if(theme_get_setting('slider_type')  == 'piecemaker'){
  * <?xml version="1.0" encoding="utf-8"?>
 <Piecemaker>
 	<Contents>
-		<Image Source="http://localhost/icompany/upgrade/sites/default/files/styles/slider/public/0008020422O-1920x1280.jpg" Title="Unlimited Colors and Easy to customize">
+		<Image Source="http://localhost/icompany_trizones/upgrade/sites/default/files/styles/slider/public/0008020422O-1920x1280.jpg" Title="Unlimited Colors and Easy to customize">
 			<Text>
 				<p class="piecemaker-caption-body">
 					<h2>Unlimited Colors and Easy to customize</h2>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis ...
@@ -1182,7 +1182,7 @@ if(theme_get_setting('slider_type')  == 'piecemaker'){
 			</Text>
 			<Hyperlink URL="#" />
 		</Image>
-		<Image Source="http://localhost/icompany/upgrade/sites/default/files/styles/slider/public/triworks_arch2.jpg" Title="Lorem ipsum dolor sit amet">
+		<Image Source="http://localhost/icompany_trizones/upgrade/sites/default/files/styles/slider/public/triworks_arch2.jpg" Title="Lorem ipsum dolor sit amet">
 			<Text>
 				<p class="piecemaker-caption-body">
 					<h2>Lorem ipsum dolor sit amet</h2>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis ...
