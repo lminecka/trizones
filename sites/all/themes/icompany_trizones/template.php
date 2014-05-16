@@ -29,6 +29,10 @@ drupal_add_js(drupal_get_path('theme', 'icompany_trizones') . '/js/hoverIntent.j
 drupal_add_js(drupal_get_path('theme', 'icompany_trizones') . '/js/superfish.js', array('type' => 'file', 'scope' => 'header', 'group' => 'JS_LIBRARY', 'weight' => 30));
 drupal_add_css(drupal_get_path('theme', 'icompany_trizones') .'/css/superfish.css',  array(  'group' => 'CSS_THEME', 'weight' => 93));
 
+
+// trizones
+drupal_add_css(drupal_get_path('theme', 'icompany_trizones') .'/css/trizones.css',  array(  'group' => 'CSS_THEME', 'weight' => 120));
+
 // Google fonts
 // Prepare Google font css 
 function get_google_css_string(){

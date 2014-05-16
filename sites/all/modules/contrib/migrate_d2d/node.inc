@@ -127,6 +127,7 @@ abstract class DrupalNodeMigration extends DrupalMigration {
    * source row with the CCK fields.
    */
   public function prepareRow($row) {
+  	watchdog('migrate_d2d', 'prepareRow');
     if (parent::prepareRow($row) === FALSE) {
       return FALSE;
     }

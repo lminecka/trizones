@@ -38,7 +38,7 @@ class TrizonesUserMigration extends DrupalUser4Migration {
 		$this->addFieldMapping('field_address:is_primary', NULL);
     $this->addFieldMapping('field_publish_address', 'profile_publish_address');
   	$this->addFieldMapping(NULL, 'profile_publish_phone');
-  	$this->addFieldMapping('field_usat', 'profile_usat');
+  	$this->addFieldMapping('field_usat_number', 'profile_usat');
   	$this->addFieldMapping('field_chip_number', 'profile_chip_number');
   	$this->addFieldMapping('field_weakest_sport', 'profile_weakest_sport');
   	$this->addFieldMapping('field_strongest_sport', 'profile_strongest_sport');
@@ -59,7 +59,7 @@ class TrizonesUserMigration extends DrupalUser4Migration {
   	$this->addFieldMapping('field_referer_other:language', NULL);
   	$this->addFieldMapping('field_training_suggestions', 'profile_training_suggestions');
   	$this->addFieldMapping('field_training_suggestions:language', NULL);
-  	$this->addFieldMapping('field_usat_expire', 'profile_usat_expire');
+  	$this->addFieldMapping('field_usat_expiration_date', 'profile_usat_expire');
   	$this->addFieldMapping('field_shirt_size', 'profile_shirt_size');
   	$this->addFieldMapping('field_team', 'profile_team');
   	

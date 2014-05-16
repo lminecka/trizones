@@ -84,9 +84,8 @@ class DrupalNode4Migration extends DrupalNodeMigration {
   }
 
   public function prepareRow($row) {
-    if (parent::prepareRow($row) === FALSE) {
-      return FALSE;
-    }
+  	watchdog('migrate_d2d', 'prepareRow');
+    
     // Convert the default field names to the nice-looking ones.
     foreach ($this->fixFieldNames as $clean => $display) {
       if (isset($row->$clean)) {
