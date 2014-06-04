@@ -7,7 +7,7 @@ hidden = TRUE
 dependencies[] = migrate
 dependencies[] = migrate_d2d
 
-
+files[] = file.inc
 files[] = node.inc
 files[] = source.inc
 files[] = taxonomy.inc

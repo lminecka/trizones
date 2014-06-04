@@ -54,7 +54,7 @@ class DefaultMailSystem implements MailSystemInterface {
     foreach ($message['headers'] as $name => $value) {
       $mimeheaders[] = $name . ': ' . mime_header_encode($value);
     }
-    $line_endings = MAIL_LINE_ENDINGS;// variable_get('mail_line_endings', MAIL_LINE_ENDINGS);
+    $line_endings = variable_get('mail_line_endings', MAIL_LINE_ENDINGS);
     // Prepare mail commands.
     $mail_subject = mime_header_encode($message['subject']);
     // Note: e-mail uses CRLF for line-endings. PHP's API requires LF

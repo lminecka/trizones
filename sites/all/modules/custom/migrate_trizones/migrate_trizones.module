@@ -38,6 +38,18 @@ function migrate_trizones_register_migrations() {
   // We just use the migrate_d2d D4 migration class as-is.
   Migration::registerMigration('TrizonesUserMigration', $arguments['machine_name'],
                                $arguments);
+                               
+$file_arguments = $common_arguments + array(
+  'machine_name' => 'TZFiles',
+  'description' => t('Import Drupal 4 files'),
+  'user_migration' => 'TZUser',
+  'default_uid' => 1,
+  'source_dir' => '/Users/lauren/d4_files',
+  'destination_dir' => '/Users/lauren/Sites/trizones/sites/default/files',
+);
+  Migration::registerMigration('TrizonesFileMigration', $file_arguments['machine_name'],
+                               $file_arguments);
+
 
   // For vocabulary migrations, source_vocabulary and destination_vocabulary are
   // required arguments. Note that in Drupal 4 vocabularies did not have machine
