@@ -1,4 +1,6 @@
-/sites/default
+sites/default/
+
+tmp/*
 
 # OS generated files #
 ######################

@@ -42,7 +42,10 @@ class TrizonesCoachMigration extends TrizonesNodeMigration {
 		$this->addFieldMapping('field_email', 'Email');
 		$this->addFieldMapping('field_job_title', 'JobTitle');
 		$this->addFieldMapping('field_job_title:language', 'JobTitle_language');
-		$this->addFieldMapping('field_photograph', 'Photograph');
+		$this->addFieldMapping('field_photograph', 'Photograph')
+      ->sourceMigration('TZFiles');
+    $this->addFieldMapping('field_left_callout_image:file_class')
+   		 ->defaultValue('MigrateFileFid');
 		$this->addFieldMapping('field_photograph:file_class', 'Photograph_file_class');
 		$this->addFieldMapping('field_photograph:language', 'Photograph_language');
     $this->addFieldMapping('field_photograph:destination_dir', 'Photograph_destination_dir');
@@ -240,8 +243,10 @@ class TrizonesRaceMigration extends TrizonesNodeMigration {
 		$this->addFieldMapping('field_race_location:country', 'Location_country');
 		$this->addFieldMapping('field_race_location:source', 'Location_source');
 		$this->addFieldMapping('field_race_location:is_primary', 'Location_is_primary');
-		$this->addFieldMapping('field_race_logo', 'Logo');
-		$this->addFieldMapping('field_race_logo:file_class', 'Logo_file_class');
+		$this->addFieldMapping('field_race_logo', 'Logo')
+		  ->sourceMigration('TZFiles');
+		$this->addFieldMapping('field_race_logo:file_class', 'Logo_file_class')
+  	->defaultValue('MigrateFileFid');
 		$this->addFieldMapping('field_race_logo:language', 'Logo_language');
     $this->addFieldMapping('field_race_logo:destination_dir', 'Logo_destination_dir');
     $this->addFieldMapping('field_race_logo:destination_file', 'Logo_destination_file');
