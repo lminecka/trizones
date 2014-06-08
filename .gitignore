@@ -12,3 +12,7 @@ tmp/*
 Icon?
 ehthumbs.db
 Thumbs.db
+
+# Drupal files #
+# ##############
+# sites/default/*
