@@ -64,4 +64,22 @@ class TrizonesUserMigration extends DrupalUser4Migration {
   	$this->addFieldMapping('field_team', 'profile_team');
   	
   }
+  
+  /**
+   * Implementation of Migration::prepareRow().
+   *
+   * @param $row
+   */
+  public function prepareRow($row) {
+    if (parent::prepareRow($row) === FALSE) {
+      return FALSE;
+    }
+  	watchdog('migrate_lm_a', print_r($row, true));
+    $bday_array = unserialize($row->profile_birthdate);
+    $year  = $bday_array['year'];
+		$month = ($bday_array['month'] < 9) ?  '0'.$bday_array['month'] : $bday_array['month'];
+		$day   = ($bday_array['day'] < 9) ?  '0'.$bday_array['day'] : $bday_array['day'];
+		$row->profile_birthdate = "$year-$month-$day";
+		watchdog('migrate_lm_b', print_r($row, true));
+  }
 }
